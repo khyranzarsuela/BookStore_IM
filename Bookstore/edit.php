@@ -1,0 +1,150 @@
+<?php
+    include "database.php";
+    include "get.php";
+
+    if(isset($_POST['edit'])) {
+          $bookId = $_POST['bookId'];
+        $editTitle = $_POST['updateTitle'];
+        $editAuthor = $_POST['updateAuthor'];
+        $editCategory = $_POST['updateCategory'];
+        $editPrice = $_POST['updatePrice'];
+        $editStockQuantity = $_POST['updateStockQuantity'];
+    }
+    if(isset($_POST['updateSubmit'])){
+        $bookId = $_POST['bookId'];
+        $updateTitle = $_POST['updateTitle'];
+        $updateAuthor = $_POST['updateAuthor'];
+        $updateCategory = $_POST['updateCategory'];
+        $updatePrice = $_POST['updatePrice'];
+        $updateStockQuantity = $_POST['updateStockQuantity'];
+
+       $queryUpdate = "UPDATE books SET title='$updateTitle', author_id='$updateAuthor', category_id='$updateCategory', price='$updatePrice', stock_quantity='$updateStockQuantity' WHERE book_id='$bookId'";
+        $sqlUpdate = mysqli_query($connection, $queryUpdate);
+
+        echo '<script>alert("Book updated successfully!");</script>';
+        echo '<script>window.location.href = "index2.php";</script>';
+
+    }
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore Inventory</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body{
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.form-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.form-card{
+    background: #fff;
+    padding: 25px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-card label{
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-card input[type="text"],
+.form-card select{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+.form-card input[type="submit"]{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background:#0f172a;
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-card input[type="submit"]:hover{
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+            background:#0a1626;
+             transition: all 0.3s ease;
+}
+    </style>
+</head>
+<body>
+        <div class="container">
+            <h1>Bookstore Inventory</h1>
+            <p></p>
+            <form class="form-card" action="/bookstore/edit.php" method="post">
+            <!-- <label for="bookId">BookId</label>
+            <input type="text" placeholder="Enter book ID" name="bookId"> <br> -->
+
+            <input type="hidden" name="bookId" value="<?php echo $bookId; ?>">
+            <label for="bookTitle">Title</label>
+            <input type="text" name="updateTitle" value="<?php echo $editTitle; ?>"> <br>
+
+            <label for="Author">Author</label>
+           <select name="updateAuthor">
+            <?php while($author = mysqli_fetch_assoc($sqlAuthors)) { ?>
+            <option value="<?php echo $author['author_id']; ?>"
+             <?php if($author['author_id'] == $editAuthor){echo "selected";}?>>
+            <?php echo $author['author_name']; ?>
+                </option>
+
+            <?php } ?>
+
+        </select> <br>
+            <label for="Category">Category</label>
+           <select name="updateCategory">
+
+            <?php while($category = mysqli_fetch_assoc($sqlCategories)) { ?>
+
+                <option value="<?php echo $category['category_id']; ?>"
+                    <?php
+                        if($category['category_id'] == $editCategory){
+                            echo "selected";
+                        }
+                    ?>>
+                    <?php echo $category['category_name']; ?>
+                </option>
+
+            <?php } ?>
+
+        </select>
+        <br>
+
+            <label for="Price">Price</label>
+            <input type="text" name="updatePrice" value="<?php echo $editPrice; ?>"> <br>
+
+            <label for="Quantity">Quantity</label>
+            <input type="text" name="updateStockQuantity" value="<?php echo $editStockQuantity; ?>"> <br>
+
+            <input type="submit" value="Submit" name="updateSubmit">
+
+            </form>
+                </div>
+    </div>
+</body>
+</html>
