@@ -41,24 +41,25 @@
     if(isset($_POST['submitTransaction'])){
          session_start();
         $bookId = $_POST['book_id'];
-        $staff = $_SESSION['staff_id'];
-        $transactionType = $_POST['transaction_type'];
+        $users = $_SESSION['user_id'];
+        $transactionType = $_POST['transactionType'];
         $quantity = $_POST['quantity'];
+        $status = $_POST['status'];
         $date = $_POST['transaction_date'];
             
-            $queryAddTransaction = "INSERT INTO inventory_transactions (transaction_id, book_id, staff_id, transaction_type, quantity, transaction_date) VALUES (null,'$bookId', '$staff','$transactionType','$quantity','$date')";
+            $queryAddTransaction = "INSERT INTO inventory_transactions (book_id, user_id, transaction_type, quantity, status, transaction_date) VALUES ('$bookId', '$users','$transactionType','$quantity','$status','$date')";
             $sqlAddTransaction = mysqli_query($connection, $queryAddTransaction);
         
-            if($transactionType == "Stock In"){
-                $queryUpdateBook = "UPDATE books SET stock_quantity = stock_quantity + $quantity WHERE book_id = $bookId";
-                mysqli_query($connection, $queryUpdateBook);
+            // if($transactionType == "Stock-In" && $status == "Approved"){
+            //     $queryUpdateBook = "UPDATE books SET stock_quantity = stock_quantity + $quantity WHERE book_id = $bookId";
+            //     mysqli_query($connection, $queryUpdateBook);
 
-            }
-            elseif($transactionType == "Stock Out"){
-                $queryUpdateBook = "UPDATE books SET stock_quantity = stock_quantity - $quantity WHERE book_id = $bookId";
-                mysqli_query($connection, $queryUpdateBook);
+            // }
+            // elseif($transactionType == "Stock-Out"){
+            //     $queryUpdateBook = "UPDATE books SET stock_quantity = stock_quantity - $quantity WHERE book_id = $bookId";
+            //     mysqli_query($connection, $queryUpdateBook);
 
-            }
+            // }
 
         echo '<script>alert("Transaction added successfully!");</script>';
         echo '<script>window.location.href = "transactions.php";</script>';

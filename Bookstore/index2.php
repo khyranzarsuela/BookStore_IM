@@ -180,9 +180,8 @@
                 <thead>
                     <tr>
                         <!-- <th>Book ID</th> -->
+                        <th>ISBN</th>
                         <th>Book Title</th>
-                        <th>Author Name</th>
-                        <th>Category</th>
                         <th>Price</th>
                         <th>Stock Quantity</th>
                         <th>Actions</th>
@@ -192,18 +191,16 @@
                     <?php while($results = mysqli_fetch_array($sqlBooks)) { ?>
                     <tr>
                         <input type="hidden" name="bookId" value="<?php echo $results['book_id']; ?>">
+                         <td><?php echo $results['isbn']; ?></td>
                         <td><?php echo $results['title']; ?></td>
-                        <td><?php echo $results['author_name']; ?></td>
-                        <td><?php echo $results['category_name']; ?></td>
                         <td><?php echo $results['price']; ?></td>
                         <td><span class="status in-stock"><?php echo $results['stock_quantity']; ?></span></td>
                         <td>
                             <form action="/bookstore/edit.php" method="post">
                                 <input type="submit" value="Edit" name="edit" class="edit-btn"> 
                                 <input type="hidden" name="bookId" value="<?php echo $results['book_id']; ?>">
+                                <input type="hidden" name="updateISBN" value="<?php echo $results['isbn']; ?>">
                                  <input type="hidden" name="updateTitle" value="<?php echo $results['title']; ?>">
-                                 <input type="hidden" name="updateAuthor" value="<?php echo $results['author_name']; ?>">
-                                <input type="hidden" name="updateCategory" value="<?php echo $results['category_name']; ?>">
                                 <input type="hidden" name="updatePrice" value="<?php echo $results['price']; ?>"> 
                                 <input type="hidden" name="updateStockQuantity" value="<?php echo $results['stock_quantity']; ?>">
                             </form>

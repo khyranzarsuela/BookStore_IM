@@ -60,15 +60,15 @@
             </select>
 
             <label for="type">Transaction Type</label>
-            <select id="type" name="transaction_type" required>
-                <option value="">Select a transaction type</option>
-                <option value="Stock In">Stock In</option>
-                <option value="Stock Out">Stock Out</option>
-            </select>
+            <select name="transactionType" required>
+        <option value="Stock-In" <?= ['transaction_type'] == 'Stock-In' ? 'selected' : '' ?>>Stock-In</option>
+
+        <option value="Stock-Out" <?= ['transaction_type'] == 'Stock-Out' ? 'selected' : '' ?>>Stock-Out</option>
+    </select>
 
              <label for="quantity">Quantity</label>
             <input type="number" id="quantity" name="quantity" min="1" required>
-
+                 <input type="hidden" name="status" value="Pending">
             <label for="transaction_date">Date</label>
             <input type="date" id="transaction_date" name="transaction_date" value="2026-06-02" required>
 

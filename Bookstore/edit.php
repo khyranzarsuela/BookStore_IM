@@ -4,21 +4,19 @@
 
     if(isset($_POST['edit'])) {
           $bookId = $_POST['bookId'];
+           $editISBN = $_POST['updateISBN'];
         $editTitle = $_POST['updateTitle'];
-        $editAuthor = $_POST['updateAuthor'];
-        $editCategory = $_POST['updateCategory'];
         $editPrice = $_POST['updatePrice'];
         $editStockQuantity = $_POST['updateStockQuantity'];
     }
     if(isset($_POST['updateSubmit'])){
         $bookId = $_POST['bookId'];
-        $updateTitle = $_POST['updateTitle'];
-        $updateAuthor = $_POST['updateAuthor'];
-        $updateCategory = $_POST['updateCategory'];
+          $updateISBN = $_POST['updateISBN'];
+        $updateTitle = $_POST['updateTitle'];    
         $updatePrice = $_POST['updatePrice'];
         $updateStockQuantity = $_POST['updateStockQuantity'];
 
-       $queryUpdate = "UPDATE books SET title='$updateTitle', author_id='$updateAuthor', category_id='$updateCategory', price='$updatePrice', stock_quantity='$updateStockQuantity' WHERE book_id='$bookId'";
+       $queryUpdate = "UPDATE books SET isbn='$updateISBN', title='$updateTitle', price='$updatePrice', stock_quantity='$updateStockQuantity' WHERE book_id='$bookId'";
         $sqlUpdate = mysqli_query($connection, $queryUpdate);
 
         echo '<script>alert("Book updated successfully!");</script>';
@@ -103,36 +101,8 @@
 
             <input type="hidden" name="bookId" value="<?php echo $bookId; ?>">
             <label for="bookTitle">Title</label>
-            <input type="text" name="updateTitle" value="<?php echo $editTitle; ?>"> <br>
-
-            <label for="Author">Author</label>
-           <select name="updateAuthor">
-            <?php while($author = mysqli_fetch_assoc($sqlAuthors)) { ?>
-            <option value="<?php echo $author['author_id']; ?>"
-             <?php if($author['author_id'] == $editAuthor){echo "selected";}?>>
-            <?php echo $author['author_name']; ?>
-                </option>
-
-            <?php } ?>
-
-        </select> <br>
-            <label for="Category">Category</label>
-           <select name="updateCategory">
-
-            <?php while($category = mysqli_fetch_assoc($sqlCategories)) { ?>
-
-                <option value="<?php echo $category['category_id']; ?>"
-                    <?php
-                        if($category['category_id'] == $editCategory){
-                            echo "selected";
-                        }
-                    ?>>
-                    <?php echo $category['category_name']; ?>
-                </option>
-
-            <?php } ?>
-
-        </select>
+             <input type="text" name="updateTitle" value="<?php echo $editTitle; ?>"> <br>
+            <input type="text" name="updateISBN" value="<?php echo $editISBN; ?>"> <br>
         <br>
 
             <label for="Price">Price</label>

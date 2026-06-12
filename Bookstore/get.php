@@ -1,9 +1,6 @@
 <?php
     include "database.php";
-    $queryBooks = "SELECT books.book_id,books.title,authors.author_name,categories.category_name,books.price,books.stock_quantity
-                    FROM books
-                    INNER JOIN authors ON books.author_id = authors.author_id
-                    INNER JOIN categories ON books.category_id = categories.category_id;";
+    $queryBooks = "SELECT book_id, isbn, title, price, stock_quantity FROM books;";
     $sqlBooks = mysqli_query($connection, $queryBooks);
 
     $queryAuthors = "SELECT * FROM authors;";
@@ -12,8 +9,8 @@
     $queryCategories = "SELECT * FROM categories;";
     $sqlCategories = mysqli_query($connection, $queryCategories);
 
-    $queryStaff = "SELECT * FROM staff;";
-    $sqlStaff = mysqli_query($connection,$queryStaff);
+    $queryUsers = "SELECT * FROM users;";
+    $sqlUsers = mysqli_query($connection,$queryUsers);
 
     $queryTotalBooks = "SELECT 
                         categories.category_name,
@@ -35,10 +32,7 @@
                     ";
     $sqlTotalStock = mysqli_query($connection, $queryTotalStock);
 
-    $queryLowStock = "SELECT `title`, `stock_quantity`
-                    FROM `books`
-                    WHERE `stock_quantity` < 10;
-                    ";
+    $queryLowStock = "SELECT isbn, title, stock_quantity FROM books WHERE stock_quantity < 10;";
     $sqlLowStock = mysqli_query($connection, $queryLowStock);
 
     $queryCategoryASC = "SELECT books.title, categories.category_name
@@ -54,9 +48,15 @@
     $sqlCategoryDESC = mysqli_query($connection, $queryCategoryDESC);
 
 
-    $queryTransactions = "SELECT inventory_transactions.transaction_id, books.title,staff.staff_name,inventory_transactions.transaction_type,inventory_transactions.quantity,inventory_transactions.transaction_date
-                        FROM inventory_transactions
-                        INNER JOIN books ON books.book_id = inventory_transactions.book_id
-                        INNER JOIN staff ON staff.staff_id = inventory_transactions.staff_id;";
+    $queryTransactions = "SELECT inventory_transactions.transaction_id, books.title, users.full_name, inventory_transactions.transaction_type, inventory_transactions.quantity, inventory_transactions.status, inventory_transactions.transaction_date 
+                        FROM inventory_transactions 
+                        INNER JOIN books ON inventory_transactions.book_id = books.book_id 
+                        INNER JOIN users ON inventory_transactions.user_id = users.user_id;";
     $sqlTransactions = mysqli_query($connection, $queryTransactions);
+
+    $queryAuthorCategory = "SELECT books.isbn, books.title, authors.author_name, categories.category_name, books.price, books.stock_quantity 
+                        FROM books 
+                        INNER JOIN authors ON books.author_id = authors.author_id 
+                        INNER JOIN categories ON books.category_id = categories.category_id;";
+    $sqlAuthorCategory = mysqli_query($connection, $queryAuthorCategory);
 ?>

@@ -57,6 +57,7 @@
                         <th>Staff</th>
                         <th>Type</th>
                         <th>Quantity</th>
+                        <th>Status</th>
                         <th>Date</th>
                     </tr>
                 </thead>
@@ -65,9 +66,10 @@
                     <tr>
                         <td><?php echo $results['transaction_id']; ?></td>
                         <td><?php echo $results['title']; ?></td>
-                        <td><?php echo $results['staff_name']; ?></td>
+                        <td><?php echo $results['full_name']; ?></td>
                         <td><?php echo $results['transaction_type']; ?></td>
                         <td><?php echo $results['quantity']; ?></td>
+                         <td><?php echo $results['status']; ?></td>
                         <td><?php echo $results['transaction_date']; ?></td>
                     </tr>
                     <?php } ?>

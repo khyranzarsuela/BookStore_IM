@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 09, 2026 at 04:34 PM
+-- Host: localhost:3306
+-- Generation Time: Jun 12, 2026 at 04:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,9 +42,7 @@ INSERT INTO `authors` (`author_id`, `author_name`) VALUES
 (3, 'Suzanne Collins'),
 (4, ' Michael Crichton'),
 (5, 'Frank Herbert'),
-(6, 'Andy Weir'),
-(7, 'William Shakespeare'),
-(8, 'James Clear');
+(6, 'Andy Weir');
 
 -- --------------------------------------------------------
 
@@ -54,9 +52,10 @@ INSERT INTO `authors` (`author_id`, `author_name`) VALUES
 
 CREATE TABLE `books` (
   `book_id` int(11) NOT NULL,
-  `title` varchar(100) NOT NULL,
-  `author_id` int(11) DEFAULT NULL,
-  `category_id` int(11) DEFAULT NULL,
+  `isbn` varchar(20) NOT NULL,
+  `title` varchar(150) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -65,14 +64,12 @@ CREATE TABLE `books` (
 -- Dumping data for table `books`
 --
 
-INSERT INTO `books` (`book_id`, `title`, `author_id`, `category_id`, `price`, `stock_quantity`) VALUES
-(1, 'Harry Potter and the Sorcerers Stone', 1, 1, 500.00, 59),
-(2, 'The Hunger Games', 3, 2, 560.00, 15),
-(3, 'A Game of Thrones', 2, 1, 700.00, 16),
-(4, 'Jurassic Park', 4, 2, 250.00, 9),
-(5, 'Dune', 5, 3, 400.00, 8),
-(6, 'The Martian', 6, 3, 900.00, 35),
-(7, 'Randomize', 7, 3, 200.00, 10);
+INSERT INTO `books` (`book_id`, `isbn`, `title`, `author_id`, `category_id`, `price`, `stock_quantity`) VALUES
+(1, '978-0590353403', 'Harry Potter and the Sorcerers Stone', 1, 1, 500.00, 55),
+(2, '978-0439023481', 'The Hunger Games', 3, 2, 560.00, 10),
+(3, '978-0553588484', 'A Game of Thrones', 2, 1, 700.00, 20),
+(4, '978-0345370778', 'Jurassic Park', 4, 2, 250.00, 5),
+(5, '9780441172610 ', 'Dune', 5, 3, 400.00, 308);
 
 -- --------------------------------------------------------
 
@@ -95,9 +92,7 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 (3, 'Science-Fiction'),
 (4, 'Mystery & Thriller'),
 (5, 'Biography & Autobiography'),
-(6, 'Non-Fiction'),
-(7, 'Romance'),
-(8, 'Pyschology');
+(6, 'Non-Fiction');
 
 -- --------------------------------------------------------
 
@@ -107,10 +102,11 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 
 CREATE TABLE `inventory_transactions` (
   `transaction_id` int(11) NOT NULL,
-  `book_id` int(11) DEFAULT NULL,
-  `staff_id` int(11) DEFAULT NULL,
-  `transaction_type` varchar(20) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `transaction_type` enum('Stock-In','Stock-Out') NOT NULL,
   `quantity` int(11) NOT NULL,
+  `status` enum('Pending','Approved','Rejected') NOT NULL,
   `transaction_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -118,49 +114,62 @@ CREATE TABLE `inventory_transactions` (
 -- Dumping data for table `inventory_transactions`
 --
 
-INSERT INTO `inventory_transactions` (`transaction_id`, `book_id`, `staff_id`, `transaction_type`, `quantity`, `transaction_date`) VALUES
-(1, 3, 5, 'Stock In', 10, '2026-06-02'),
-(2, 1, 1, 'Stock-In', 5, '2026-06-03'),
-(3, 2, 3, 'Stock-In', 10, '2026-06-03'),
-(4, 3, 2, 'Stock-Out', 2, '2026-06-01'),
-(5, 1, 2, 'Stock-Out', 5, '2026-06-01'),
-(6, 1, 3, 'Stock-In', 1, '2026-06-03'),
-(7, 4, 6, 'Stock In', 100, '2026-06-03'),
-(8, 3, 6, 'Stock Out', 2, '2026-06-02'),
-(9, 3, 6, 'Stock Out', 2, '2026-06-02'),
-(10, 3, 6, 'Stock Out', 2, '2026-06-02'),
-(11, 3, 6, 'Stock Out', 2, '2026-06-02'),
-(12, 3, 6, 'Stock Out', 2, '2026-06-02'),
-(13, 4, 6, 'Stock Out', 50, '2026-06-02'),
-(14, 4, 5, 'Stock Out', 46, '2026-06-02'),
-(15, 1, 5, 'Stock In', 9, '2026-06-02');
+INSERT INTO `inventory_transactions` (`transaction_id`, `book_id`, `user_id`, `transaction_type`, `quantity`, `status`, `transaction_date`) VALUES
+(1, 1, 2, 'Stock-In', 10, 'Approved', '2026-05-01'),
+(2, 1, 2, 'Stock-Out', 5, 'Approved', '2026-05-02'),
+(3, 2, 3, 'Stock-In', 15, 'Pending', '2026-05-03'),
+(4, 3, 2, 'Stock-Out', 2, 'Approved', '2026-05-04'),
+(5, 5, 3, 'Stock-In', 8, 'Pending', '2026-05-05'),
+(6, 5, 1, 'Stock-In', 10, 'Pending', '2026-06-02'),
+(7, 4, 1, 'Stock-In', 300, 'Approved', '2026-06-02'),
+(8, 5, 1, 'Stock-In', 300, 'Pending', '2026-06-02'),
+(9, 5, 1, 'Stock-In', 10, 'Approved', '2026-06-02'),
+(10, 2, 1, 'Stock-In', 100, 'Approved', '2026-06-02');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `staff`
+-- Table structure for table `roles`
 --
 
-CREATE TABLE `staff` (
-  `staff_id` int(11) NOT NULL,
-  `staff_name` varchar(100) DEFAULT NULL,
-  `username` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `role` varchar(50) DEFAULT NULL
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL,
+  `role_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `staff`
+-- Dumping data for table `roles`
 --
 
-INSERT INTO `staff` (`staff_id`, `staff_name`, `username`, `password`, `role`) VALUES
-(1, 'Mark Bautista', 'admin01', 'admin123', 'Admin'),
-(2, 'Maria Santos', 'staff01', 'staff123', 'Staff'),
-(3, 'John Paul de Leon', 'admin02', 'admin123', 'Admin'),
-(4, 'Mark Anthony Cruz', 'staff02', 'staff123', 'Staff'),
-(5, 'Khyran Zarsuela', 'admin03', 'admin123', 'Admin'),
-(6, 'Lawrence De Mesa', 'admin04', 'admin123', 'Admin'),
-(7, 'Neil Ubaldo', 'admin05', 'admin123', 'Admin');
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+(1, 'Admin'),
+(2, 'Staff');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `role_id`, `full_name`, `username`, `password`, `status`) VALUES
+(1, 1, 'Khyran Zarsuela', 'admin01', 'admin123', 'Active'),
+(2, 2, 'Lawrence De Mesa', 'staff01', 'staff123', 'Active'),
+(3, 2, 'Neil Ubaldo', 'staff02', 'staff456', 'Active'),
+(4, 2, 'Richard Jopia', 'staff03', 'staff789', 'Inactive'),
+(5, 1, 'John Wick', 'admin02', 'admin456', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -177,6 +186,7 @@ ALTER TABLE `authors`
 --
 ALTER TABLE `books`
   ADD PRIMARY KEY (`book_id`),
+  ADD UNIQUE KEY `isbn` (`isbn`),
   ADD KEY `author_id` (`author_id`),
   ADD KEY `category_id` (`category_id`);
 
@@ -192,13 +202,21 @@ ALTER TABLE `categories`
 ALTER TABLE `inventory_transactions`
   ADD PRIMARY KEY (`transaction_id`),
   ADD KEY `book_id` (`book_id`),
-  ADD KEY `staff_id` (`staff_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `staff`
+-- Indexes for table `roles`
 --
-ALTER TABLE `staff`
-  ADD PRIMARY KEY (`staff_id`);
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`role_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -208,31 +226,37 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `inventory_transactions`
 --
 ALTER TABLE `inventory_transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `staff`
+-- AUTO_INCREMENT for table `roles`
 --
-ALTER TABLE `staff`
-  MODIFY `staff_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+ALTER TABLE `roles`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -250,7 +274,13 @@ ALTER TABLE `books`
 --
 ALTER TABLE `inventory_transactions`
   ADD CONSTRAINT `inventory_transactions_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`),
-  ADD CONSTRAINT `inventory_transactions_ibfk_2` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`staff_id`);
+  ADD CONSTRAINT `inventory_transactions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

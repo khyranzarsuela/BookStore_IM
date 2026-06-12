@@ -14,12 +14,12 @@
     $queryRecentTransactionsCount = "SELECT COUNT(*) AS recent_transactions FROM inventory_transactions WHERE transaction_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY);";
     $sqlRecentTransactionsCount = mysqli_query($connection, $queryRecentTransactionsCount);
 
-     $queryTransactionsP = "SELECT inventory_transactions.transaction_id, books.title, users.full_name, inventory_transactions.transaction_type, inventory_transactions.quantity, inventory_transactions.status, inventory_transactions.transaction_date 
+     $queryTransactionsA = "SELECT inventory_transactions.transaction_id, books.title, users.full_name, inventory_transactions.transaction_type, inventory_transactions.quantity, inventory_transactions.status, inventory_transactions.transaction_date 
                         FROM inventory_transactions 
                         INNER JOIN books ON inventory_transactions.book_id = books.book_id 
                         INNER JOIN users ON inventory_transactions.user_id = users.user_id
-                        WHERE inventory_transactions.status = 'Pending';";
-    $sqlTransactionsP = mysqli_query($connection, $queryTransactionsP);
+                        WHERE inventory_transactions.status = 'Approved';";
+    $sqlTransactionsA = mysqli_query($connection, $queryTransactionsA);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,53 +136,6 @@
     text-align: center;
 
 }
-.inventory-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-.inventory-table th,
-.inventory-table td {
-    padding: 16px 14px;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
-}
-.inventory-table th {
-    background: #f8fafc;
-    font-weight: 700;
-    color: #0f172a;
-}
-.inventory-table tr:hover {
-    background: #f1f5f9;
-}
-.inventory-table tbody tr:last-child td {
-    border-bottom: none;
-}
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #0f172a;
-    background: #e2e8f0;
-}
-.status.low-stock {
-    background: #fee2e2;
-    color: #991b1b;
-}
-.status.in-stock {
-    background: #dcfce7;
-    color: #166534;
-}
-.caption {
-    font-size: 0.95rem;
-    color: #64748b;
-    margin-top: 8px;
-}
-
     </style>
 </head>
 <body>
@@ -291,10 +244,9 @@
             echo "<h3 class='h3'>Book not found.</h3>";
             }
     } ?>
+          <?php if ($_SESSION['role_name'] === "Admin") { ?>
 
-            <?php if ($_SESSION['role_name'] === "Admin") { ?>
-
-    <h1>Pending Transactions</h1>
+    <h1>Recent Transactions</h1>
 
     <table class="inventory-table">
         <thead>
@@ -306,12 +258,11 @@
                 <th>Quantity</th>
                 <th>Status</th>
                 <th>Date</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
 
-        <?php while ($results = mysqli_fetch_array($sqlTransactionsP)) { ?>
+        <?php while ($results = mysqli_fetch_array($sqlTransactionsA)) { ?>
             <tr>
                 <td><?php echo $results['transaction_id']; ?></td>
                 <td><?php echo $results['title']; ?></td>
@@ -320,17 +271,6 @@
                 <td><?php echo $results['quantity']; ?></td>
                 <td><?php echo $results['status']; ?></td>
                 <td><?php echo $results['transaction_date']; ?></td>
-                <td>
-                <form action="editStatus.php" method="post">
-                    <input type="submit" value="Edit Status" name="editStatus" class="edit-btn"> 
-                    <input type="hidden" name="transactionId" value="<?php echo $results['transaction_id']; ?>">
-                    <input type="hidden" name="updateStatus" value="<?php echo $results['status']; ?>">
-                </form>
-                <form action="delete.php" method="post">
-                    <input type="submit" value="Delete" name="deleteStatus" class="delete-btn">
-                    <input type="hidden" name="DeleteId" value="<?php echo $results['transaction_id']; ?>">
-                </form>
-            </td>
             </tr>
         <?php } ?>
 
