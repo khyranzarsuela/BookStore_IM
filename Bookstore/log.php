@@ -10,7 +10,8 @@ if(isset($_POST['submit'])){
     $queryUser = "SELECT * FROM users
                 INNER JOIN roles On users.role_id = roles.role_id
                 WHERE username='$username'
-                AND password='$password'";
+                AND password='$password'
+                AND status='Active'";
 
     $result = mysqli_query($connection, $queryUser);
 

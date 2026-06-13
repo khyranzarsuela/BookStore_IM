@@ -7,10 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookstore Inventory</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style3.css">
     <style>
         .addTransaction-btn{
-    background:#0f172a;
+    background:var(--primary);
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -22,7 +22,7 @@
         .addTransaction-btn:hover{
              transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-            background:#0a1626;
+            background:var(--hover);
              transition: all 0.3s ease;
 
         }
@@ -32,24 +32,26 @@
     <div class="layout">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>Welcome</h2>
+                <h2 style="text-align: center; color: var(--text);">Welcome</h2>
             </div>
             <nav class="sidebar-nav">
                 <a href="index.php">Home</a>
                 <a href="index2.php">Inventory</a>
                 <a href="categories.php">Categories</a>
                 <a href="reports.php">Reports</a>
-                <a href="#" style="background: #0f172a; color: #ffffff; text-align: center;">Transactions</a>
+                <a href="#" style="background: var(--primary); color: #ffffff; text-align: center;">Transactions</a>
                 <a href="Login.php">Logout</a>
             </nav>
         </aside>
 
         <div class="container">
-            <h1>Transactions</h1>
+            <h1 style="color: var(--text);">Transactions</h1>
             <p>Transaction records for your bookstore.</p>
             <button class="addTransaction-btn" onclick="window.location.href='addTransaction.php'">Add Transaction</button>
-             <table class="inventory-table">
-                <h1>Recent Transactions</h1>
+              
+            <div class="inventory-section">
+            <table class="inventory-table">
+                <h1 style="color: var(--text); font-size: 20px;">Recent Transactions</h1>
                 <thead>
                     <tr>
                         <th>Transaction ID</th>
@@ -76,6 +78,8 @@
                 </tbody>
             </table>
         </div>
+        </div>
     </div>
 </body>
 </html>
+

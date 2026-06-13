@@ -3,13 +3,14 @@
 
     if(isset($_POST['submit'])){
         $bookId = uniqid();
+        $ISBN = $_POST['ISBN'];
         $bookTitle = $_POST['bookTitle'];
         $author = $_POST['author'];
         $category = $_POST['category'];
         $price = $_POST['price'];
         $stockQuantity = $_POST['stockQuantity'];
 
-        $queryAdd = "INSERT INTO books (title,author_id,category_id,price,stock_quantity) VALUES ('$bookTitle','$author','$category','$price','$stockQuantity')";
+        $queryAdd = "INSERT INTO books (isbn, title,author_id,category_id,price,stock_quantity) VALUES ('$ISBN','$bookTitle','$author','$category','$price','$stockQuantity')";
         $sqlAdd = mysqli_query($connection, $queryAdd);
 
         echo '<script>alert("Book added successfully!");</script>';

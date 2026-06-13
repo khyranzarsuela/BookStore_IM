@@ -8,10 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Book</title>
     <style>
+              :root{
+    --primary: #8B5E3C;
+    --secondary: #D2B48C;
+
+    --background: #F8F5F0;
+    --card: #FFFFFF;
+    --text: #3E2C23;
+
+    --hover: #A47149;
+    --border: #E5DDD3;
+}
 body{
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--background);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,7 +34,8 @@ body{
     justify-content: center;
 }
 .form-card{
-    background: #fff;
+    background: var(--card);
+    color: var(--text);
     padding: 25px;
     width: 350px;
     border-radius: 10px;
@@ -51,7 +63,7 @@ body{
     width: 100%;
     padding: 10px;
     border: none;
-    background:#0f172a;
+    background: var(--primary);
     color: #ffffff;
     font-size: 16px;
     border-radius: 5px;
@@ -61,7 +73,7 @@ body{
 
 .form-card input[type="submit"]:hover{
       box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-            background:#0a1626;
+            background: var(--hover);
              transition: all 0.3s ease;
 }
     </style>

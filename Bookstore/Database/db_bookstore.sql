@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 12, 2026 at 04:15 AM
+-- Generation Time: Jun 13, 2026 at 01:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,8 @@ INSERT INTO `authors` (`author_id`, `author_name`) VALUES
 (3, 'Suzanne Collins'),
 (4, ' Michael Crichton'),
 (5, 'Frank Herbert'),
-(6, 'Andy Weir');
+(6, 'Andy Weir'),
+(9, 'greta');
 
 -- --------------------------------------------------------
 
@@ -65,11 +66,12 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`book_id`, `isbn`, `title`, `author_id`, `category_id`, `price`, `stock_quantity`) VALUES
-(1, '978-0590353403', 'Harry Potter and the Sorcerers Stone', 1, 1, 500.00, 55),
-(2, '978-0439023481', 'The Hunger Games', 3, 2, 560.00, 10),
+(1, '978-0590353403', 'Harry Potter and the Sorcerers Stone', 1, 1, 500.00, 65),
+(2, '978-0439023481', 'The Hunger Games', 3, 2, 560.00, 20),
 (3, '978-0553588484', 'A Game of Thrones', 2, 1, 700.00, 20),
 (4, '978-0345370778', 'Jurassic Park', 4, 2, 250.00, 5),
-(5, '9780441172610 ', 'Dune', 5, 3, 400.00, 308);
+(5, '978-0441172610 ', 'Dune', 5, 3, 400.00, 38),
+(11, '06798i0877i06', 'book', 9, 3, 1000.00, 5);
 
 -- --------------------------------------------------------
 
@@ -115,16 +117,13 @@ CREATE TABLE `inventory_transactions` (
 --
 
 INSERT INTO `inventory_transactions` (`transaction_id`, `book_id`, `user_id`, `transaction_type`, `quantity`, `status`, `transaction_date`) VALUES
-(1, 1, 2, 'Stock-In', 10, 'Approved', '2026-05-01'),
-(2, 1, 2, 'Stock-Out', 5, 'Approved', '2026-05-02'),
-(3, 2, 3, 'Stock-In', 15, 'Pending', '2026-05-03'),
-(4, 3, 2, 'Stock-Out', 2, 'Approved', '2026-05-04'),
-(5, 5, 3, 'Stock-In', 8, 'Pending', '2026-05-05'),
-(6, 5, 1, 'Stock-In', 10, 'Pending', '2026-06-02'),
-(7, 4, 1, 'Stock-In', 300, 'Approved', '2026-06-02'),
-(8, 5, 1, 'Stock-In', 300, 'Pending', '2026-06-02'),
-(9, 5, 1, 'Stock-In', 10, 'Approved', '2026-06-02'),
-(10, 2, 1, 'Stock-In', 100, 'Approved', '2026-06-02');
+(1, 1, 1, 'Stock-In', 10, 'Approved', '2026-06-13'),
+(2, 3, 1, 'Stock-In', 5, 'Pending', '2026-06-13'),
+(3, 4, 1, 'Stock-In', 10, 'Approved', '2026-06-13'),
+(4, 4, 1, 'Stock-Out', 10, 'Approved', '2026-06-13'),
+(5, 5, 3, 'Stock-In', 10, 'Approved', '2026-06-13'),
+(6, 5, 1, 'Stock-In', 10, 'Approved', '2026-06-13'),
+(7, 11, 1, 'Stock-Out', 5, 'Approved', '2026-06-13');
 
 -- --------------------------------------------------------
 
@@ -226,13 +225,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `authors`
 --
 ALTER TABLE `authors`
-  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -244,7 +243,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `inventory_transactions`
 --
 ALTER TABLE `inventory_transactions`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `roles`

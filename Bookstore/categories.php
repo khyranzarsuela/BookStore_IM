@@ -7,10 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookstore Inventory</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style3.css">
     <style>
          .filter{
-    background:#0f172a;
+    background:var(--primary);
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -22,12 +22,12 @@
         .filter:hover{
              transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-            background:#0a1626;
+            background:var(--hover);
              transition: all 0.3s ease;
 
         }
          .sort-button{
-    background:#0f172a;
+      background:var(--primary);
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -39,7 +39,7 @@
         .sort-button:hover{
              transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-            background:#0a1626;
+            background:var(--hover);
              transition: all 0.3s ease;
 
         }
@@ -58,20 +58,20 @@
     <div class="layout">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>Welcome</h2>
+                <h2 style="text-align: center; color: var(--text);">Welcome</h2>
             </div>
             <nav class="sidebar-nav">
                 <a href="index.php">Home</a>
                 <a href="index2.php">Inventory</a>
-                <a href="#" style="background: #0f172a; color: #ffffff; text-align: center;">Categories</a>
+                <a href="#" style="background: var(--primary); color: #ffffff; text-align: center;">Categories</a>
                 <a href="reports.php">Reports</a>
                 <a href="transactions.php">Transactions</a>
-                <a href="logout.php">Logout</a>
+                <a href="Login.php">Logout</a>
             </nav>
         </aside>
 
         <div class="container">
-            <h1>Categories</h1>
+            <h1 style="color: var(--text);">Categories</h1>
             <p>Manage your bookstore categories.</p>
             <button class="sort-button" onclick="atoz()">Sort by ASC</button>
             <button class="sort-button" onclick="ztoa()">Sort by DESC</button>
@@ -87,24 +87,26 @@
         </form>
         
             <br>
+            <div class="inventory-section">
              <table class="inventory-table">
-                <h1>Books Browse by Category</h1>
+                <h1 style="color: var(--text); font-size: 20px;">Books Browse by Category</h1>
                 <thead>
                     <tr>
-                        <th>Book Title</th>
                         <th>Category</th>
+                         <th>Book Title</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while($results = mysqli_fetch_array($sqlCategoryASC)) { ?>
                     <tr>
-                    
+                     <td><span class="status in-stock"><?php echo $results['category_name']; ?></span></td>
                         <td><?php echo $results['title']; ?></td>
-                          <td><span class="status in-stock"><?php echo $results['category_name']; ?></span></td>
+                         
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </body>

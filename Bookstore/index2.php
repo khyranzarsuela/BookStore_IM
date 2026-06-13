@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookstore Inventory</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style2.css">
     <style>
     .edit-btn{
     background:#10b981;
@@ -34,7 +34,7 @@
         background:#dc2626;
     }
     .addBooks{
-    background:#0f172a;
+    background: var(--primary);
     color: #ffffff;
     border: none;
     border-radius: 8px;
@@ -47,7 +47,7 @@
     .addBooks:hover{
              transform: translateY(-2px);
             box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-            background:#0a1626;
+            background: var(--hover);
              transition: all 0.3s ease;
 
         }
@@ -92,7 +92,7 @@
 
 .search-button {
     padding: 12px 20px;
-    background: #0f172a;
+      background: var(--primary);
     color: #ffffff;
     border: none;
     border-radius: 12px;
@@ -104,7 +104,7 @@
 }
 
 .search-button:hover {
-    background: #1e293b;
+    background: var(--hover);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
 }
@@ -112,31 +112,41 @@
 .search-button:active {
     transform: translateY(0);
 }
+.a{
+    animation: it 0.5s ease;
+}
+ @keyframes it {
+        from{opacity:0; transform: translateY(-10px);}
+       to{opacity:1; transform: translateY(0px)};
+
+    }
     </style>
 </head>
 <body>
     <div class="layout">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2>Welcome</h2>
+                <h2 style="text-align: center; color: var(--text);">Welcome</h2>
             </div>
             <nav class="sidebar-nav">
                 <a href="index.php">Home</a>
-                <a href="#" style="background: #0f172a; color: #ffffff; text-align: center;">Inventory</a>
+                <a href="#" style="background: var(--primary); color: #ffffff; text-align: center;">Inventory</a>
                 <a href="categories.php">Categories</a>
                 <a href="reports.php">Reports</a>
                 <a href="transactions.php">Transactions</a>
-                <a href="logout.php">Logout</a>
+                <a href="Login.php">Logout</a>
             </nav>
         </aside>
 
         <div class="container">
-            <h1>Bookstore Inventory</h1>
+            <div class="a">
+            <h1 style="color: var(--text);">Bookstore Inventory</h1>
             <p>Welcome to the Bookstore Inventory! See all books inventory,add books, authors, and categories.</p>
+             </div>
             <button class="addBooks" onclick="window.location.href='addBook.php'">Add Book</button>
             <button class="addBooks" onclick="window.location.href='addAuthor.php'">Add Author</button>
             <button class="addBooks" onclick="window.location.href='addCategory.php'">Add Category</button>
-
+               
               <form method="POST" class="search-form">
             <input type="text" class="searchbar" name="searchh" placeholder="Search by book title..." required>
             <button type="submit" class="search-button">Search</button>
@@ -176,6 +186,7 @@
             echo "<h3 class='h3'>Book not found.</h3>";
             }
     } ?>
+            <div class="inventory-section">
             <table class="inventory-table">
                 <thead>
                     <tr>
@@ -193,7 +204,7 @@
                         <input type="hidden" name="bookId" value="<?php echo $results['book_id']; ?>">
                          <td><?php echo $results['isbn']; ?></td>
                         <td><?php echo $results['title']; ?></td>
-                        <td><?php echo $results['price']; ?></td>
+                        <td><span>₱</span><?php echo $results['price']; ?></td>
                         <td><span class="status in-stock"><?php echo $results['stock_quantity']; ?></span></td>
                         <td>
                             <form action="/bookstore/edit.php" method="post">
@@ -213,6 +224,7 @@
                     <?php } ?>
                 </tbody>
             </table>
+        </div>
         </div>
     </div>
 </body>

@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
+         :root{
+    --primary: #8B5E3C;
+    --secondary: #D2B48C;
+
+    --background: #F8F5F0;
+    --card: #FFFFFF;
+    --text: #3E2C23;
+
+    --hover: #A47149;
+    --border: #E5DDD3;
+}
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -18,7 +29,7 @@
         }
         .login-card {
             width: min(380px, 90vw);
-              background: rgba(255, 255, 255, 0.49);
+              background: var(--card);
                 border-radius: 16px;
                 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
                 backdrop-filter: blur(7px);
@@ -32,13 +43,13 @@
         .login-card h1 {
             margin: 0 0 16px;
             font-size: 1.8rem;
-            color: white;
-             filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+            color: var(--text);
+           
         }
         .login-card p {
             margin: 0 0 24px;
-            color: white;
-             filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+            color: var(--text);
+           
         }
         .form-group {
             margin-bottom: 18px;
@@ -48,28 +59,28 @@
             display: block;
             margin-bottom: 6px;
             font-size: 0.95rem;
-            color:white;
-             filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+            color: var(--text);
+          
         }
         .form-group input {
             width: 92%;
             padding: 12px 14px;
-            border: 1px solid #d1d5db;
+            border: 1px solid  var(--secondary);
             border-radius: 12px;
             font-size: 1rem;
             outline: none;
             transition: border-color 0.2s ease;
         }
         .form-group input:focus {
-            border-color: #0ea5e9;
-            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px  #d2b48c3e;
         }
         .show-password{
             margin-top: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
-            color: white;
+            color: var(--text);
             font-size: 14px;
         }
 
@@ -81,7 +92,7 @@
             padding: 14px 16px;
             border: none;
             border-radius: 12px;
-            background:#0f172a;
+            background: var(--primary);
             color: #ffffff;
              filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
             font-size: 1rem;
@@ -90,8 +101,7 @@
         }
         .login-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-            background:#0a1626;
+            background: var(--hover);
              transition: all 0.3s ease;
         }
     </style>
@@ -104,7 +114,7 @@
         <form action="log.php" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="you123">
+                <input type="text" id="username" name="username" placeholder="Enter your username">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>

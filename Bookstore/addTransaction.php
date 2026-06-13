@@ -11,6 +11,20 @@
     <title>Add Transaction</title>
     <link rel="stylesheet" href="stylesss.css">
     <style>
+          :root{
+    --primary: #8B5E3C;
+    --secondary: #D2B48C;
+
+    --background: #F8F5F0;
+    --card: #FFFFFF;
+    --text: #3E2C23;
+
+    --hover: #A47149;
+    --border: #E5DDD3;
+}
+        body{
+            background-color: var(--background);
+        }
         .form-wrapper {
             display: flex;
             justify-content: center;
@@ -18,7 +32,8 @@
             height: 100vh;
         }
         .form-card {
-            background-color: #ffffff;
+            background-color: var(--card);
+            color: var(--text);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -26,12 +41,12 @@
         }
         .form-card h2 {
             margin-bottom: 20px;
-            color: #111827;
+            color: var(--text);
         }
         .form-card label {
             display: block;
             margin-bottom: 8px;
-            color: #374151;
+            color: var(--text);
         }
         .form-card input[type="text"],
         .form-card input[type="number"],
@@ -49,7 +64,7 @@
 <body>
     <div class="form-wrapper">
         <form class="form-card" action="add.php" method="post">
-            <h2 style="margin-bottom: 20px; color: #111827; text-align: center;">Add Transaction</h2>
+            <h2 style="margin-bottom: 20px; color: var(--text); text-align: center;">Add Transaction</h2>
 
             <label for="book">Book</label>
             <select id="book" name="book_id" required>
@@ -72,7 +87,7 @@
             <label for="transaction_date">Date</label>
             <input type="date" id="transaction_date" name="transaction_date" value="2026-06-02" required>
 
-            <button type="submit" name="submitTransaction">Submit</button>
+            <button type="submit" name="submitTransaction" style="background-color: var(--primary);">Submit</button>
         </form>
     </div>
 

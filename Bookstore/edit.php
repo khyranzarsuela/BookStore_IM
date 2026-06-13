@@ -33,10 +33,21 @@
     <title>Bookstore Inventory</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        body{
+                   :root{
+    --primary: #8B5E3C;
+    --secondary: #D2B48C;
+
+    --background: #F8F5F0;
+    --card: #FFFFFF;
+    --text: #3E2C23;
+
+    --hover: #A47149;
+    --border: #E5DDD3;
+}
+body{
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--background);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,7 +59,8 @@
     justify-content: center;
 }
 .form-card{
-    background: #fff;
+    background: var(--card);
+    color: var(--text);
     padding: 25px;
     width: 350px;
     border-radius: 10px;
@@ -76,7 +88,7 @@
     width: 100%;
     padding: 10px;
     border: none;
-    background:#0f172a;
+    background: var(--primary);
     color: #ffffff;
     font-size: 16px;
     border-radius: 5px;
@@ -86,23 +98,24 @@
 
 .form-card input[type="submit"]:hover{
       box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
-            background:#0a1626;
+            background: var(--hover);
              transition: all 0.3s ease;
 }
     </style>
 </head>
 <body>
-        <div class="container">
-            <h1>Bookstore Inventory</h1>
-            <p></p>
+        <div class="form-wrapper">
             <form class="form-card" action="/bookstore/edit.php" method="post">
+                 <h1 style="color: var(--text); text-align: center;">Edit Details</h1>
             <!-- <label for="bookId">BookId</label>
             <input type="text" placeholder="Enter book ID" name="bookId"> <br> -->
 
             <input type="hidden" name="bookId" value="<?php echo $bookId; ?>">
+
+                <label for="bookTitle">ISNB</label>
+            <input type="text" name="updateISBN" value="<?php echo $editISBN; ?>"> <br>
             <label for="bookTitle">Title</label>
              <input type="text" name="updateTitle" value="<?php echo $editTitle; ?>"> <br>
-            <input type="text" name="updateISBN" value="<?php echo $editISBN; ?>"> <br>
         <br>
 
             <label for="Price">Price</label>
